@@ -107,21 +107,18 @@ class Main extends CI_Controller {
 			'tagihan': null
 		}]";
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL,            "https://osgenics.xyz/waveppobweb/index.php/main/update_payment_status" );
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt($ch, CURLOPT_POST,           1 );
-		curl_setopt($ch, CURLOPT_POSTFIELDS,     $callback ); 
-		curl_setopt($ch, CURLOPT_HTTPHEADER,     array('Content-Type: text/plain'));
-		$result = curl_exec($ch);
-	}
-	
-	public function test_curl() {
-		$ch = curl_init();
-		curl_setopt($ch,CURLOPT_URL, "https://www.google.com");
+		curl_setopt($ch,CURLOPT_URL, "https://osgenics.xyz/waveppobweb/index.php/main/update_payment_status");
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+		curl_setopt($ch, CURLOPT_POST,           1 );
+		curl_setopt($ch, CURLOPT_POSTFIELDS,     $callback );
+		curl_setopt($ch, CURLOPT_HTTPHEADER,     array('Content-Type: text/plain'));
 		$output = curl_exec($ch);
 		curl_close($ch);
 		echo $output;
+	}
+	
+	public function test_curl() {
+		
 	}
 	
 	public function test_send_message() {
