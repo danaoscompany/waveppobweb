@@ -15,10 +15,13 @@ class Main extends CI_Controller {
 	}
 	
 	public function update_payment_status() {
+		echo "Updating payment status...\n";
 		$data = file_get_contents("php://input");
+		echo "Callback: " . $data . "\n";
 		$items = json_decode($data, true);
 		foreach ($items as $item) {
 			$trxID = $item['api_trxid'];
+			echo "TRX ID (2): " . $trxID;
 			$this->db->where('trxid', $trxID);
 			$this->db->update('payments', array(
 				'status' => $status,
@@ -83,6 +86,7 @@ class Main extends CI_Controller {
 	
 	public function test() {
 		$trxID = $this->input->get('trxid');
+		echo "TRX ID: " . $trxID . "\n";
 		$payment = $this->db->get_where('payments', array('trxid' => $trxID))->row_array();
 		$callback = "[{
 			'trxid': '" . $trxID . "',
