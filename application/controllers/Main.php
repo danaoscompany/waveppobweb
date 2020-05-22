@@ -102,15 +102,12 @@ class Main extends CI_Controller {
 			'updated_at': '2019-11-15 20:59:10',
 			'tagihan': null
 		}]";
-		$item = json_decode($callback, true)[0];
-		$user = $this->db->get_where('users', array('id' => intval($payment['user_id'])))->row_array();
-		PushyAPI::send_message($user['pushy_token'], 1, 1, $title, "Klik untuk info lebih lanjut", "com.wave.passenger.UPDATE_PAYMENT_INFO", array(
-				'id_customer' => $item['target'],
-				'status' => intval($item['status']),
-				'product_type' => intval($payment['category']),
-				'product_code' => $item['code'],
-				'product_name' => $item['produk'],
-				'trxid' => $trxID
-			));
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,            "https://osgenics.xyz/waveppobweb/index.php/main/update_payment_status" );
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
+		curl_setopt($ch, CURLOPT_POST,           1 );
+		curl_setopt($ch, CURLOPT_POSTFIELDS,     $callback ); 
+		curl_setopt($ch, CURLOPT_HTTPHEADER,     array('Content-Type: text/plain'));
+		$result = curl_exec($ch);
 	}
 }
