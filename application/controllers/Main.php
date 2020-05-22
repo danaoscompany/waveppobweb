@@ -19,6 +19,29 @@ class Main extends CI_Controller {
 		$data = file_get_contents("php://input");
 		echo "Callback: " . $data . "\n";
 		$items = json_decode($data, true);
+		switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo ' - No errors';
+    break;
+    case JSON_ERROR_DEPTH:
+        echo ' - Maximum stack depth exceeded';
+    break;
+    case JSON_ERROR_STATE_MISMATCH:
+        echo ' - Underflow or the modes mismatch';
+    break;
+    case JSON_ERROR_CTRL_CHAR:
+        echo ' - Unexpected control character found';
+    break;
+    case JSON_ERROR_SYNTAX:
+        echo ' - Syntax error, malformed JSON';
+    break;
+    case JSON_ERROR_UTF8:
+        echo ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+    break;
+    default:
+        echo ' - Unknown error';
+    break;
+}
 		foreach ($items as $item) {
 			$trxID = $item['api_trxid'];
 			echo "TRX ID (2): " . $trxID;
