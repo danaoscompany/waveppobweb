@@ -103,7 +103,7 @@ class Main extends CI_Controller {
 			'tagihan': null
 		}]";
 		$item = json_decode($callback, true)[0];
-		$user = $this->db->get_where('users', array('id' => intval($payment['user_id')))->row_array();
+		$user = $this->db->get_where('users', array('id' => intval($payment['user_id'])))->row_array();
 		PushyAPI::send_message($user['pushy_token'], 1, 1, $title, "Klik untuk info lebih lanjut", "com.wave.passenger.UPDATE_PAYMENT_INFO", array(
 				'id_customer' => $item['target'],
 				'status' => intval($item['status']),
