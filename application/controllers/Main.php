@@ -110,4 +110,8 @@ class Main extends CI_Controller {
 		curl_setopt($ch, CURLOPT_HTTPHEADER,     array('Content-Type: text/plain'));
 		$result = curl_exec($ch);
 	}
+	
+	public function test_send_message() {
+		PushyAPI::send_message($user['pushy_token'], 2, 1, "Ini adalah judul notifikasi", "Ini adalah isi notifikasi", "com.wave.passenger.TEST_MESSAGE", array());
+	}
 }
