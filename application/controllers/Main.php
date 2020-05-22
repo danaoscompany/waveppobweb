@@ -112,6 +112,6 @@ class Main extends CI_Controller {
 	}
 	
 	public function test_send_message() {
-		PushyAPI::send_message($user['pushy_token'], 2, 1, "Ini adalah judul notifikasi", "Ini adalah isi notifikasi", "com.wave.passenger.TEST_MESSAGE", array());
+		PushyAPI::send_message("ab299b983c0c6c0e7e3378", 2, 1, "Ini adalah judul notifikasi", "Ini adalah isi notifikasi", "com.wave.passenger.TEST_MESSAGE", array());
 	}
 }
