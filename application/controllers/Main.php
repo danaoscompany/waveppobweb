@@ -115,6 +115,15 @@ class Main extends CI_Controller {
 		$result = curl_exec($ch);
 	}
 	
+	public function test_curl() {
+		$ch = curl_init();
+		curl_setopt($ch,CURLOPT_URL, "https://www.google.com");
+		curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+		$output = curl_exec($ch);
+		curl_close($ch);
+		echo $output;
+	}
+	
 	public function test_send_message() {
 		PushyAPI::send_message("ab299b983c0c6c0e7e3378", 2, 1, "Ini adalah judul notifikasi", "Ini adalah isi notifikasi", "com.wave.passenger.TEST_MESSAGE", array());
 	}
