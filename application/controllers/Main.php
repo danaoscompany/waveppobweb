@@ -80,4 +80,37 @@ class Main extends CI_Controller {
 			'text' => $data
 		));
 	}
+	
+	public function test() {
+		$trxID = $this->input->get('trxid');
+		$payment = $this->db->get_where('payments', array('trxid': $trxID))->row_array();
+		$callback = "[{
+			'trxid': '" . $trxID . "',
+			'api_trxid': 'INV45769',
+			'via': 'API',
+			'code': 'XL5',
+			'produk': 'XL 5000',
+			'harga': '6125',
+			'target': '" . $payment['id_customer'] . "',
+			'mtrpln': '-',
+			'note': 'Trx XL5 " . $payment['id_customer'] . " SUKSES. SN: 845392759476503',
+			'token': '845392759476503',
+			'status': '1',
+			'saldo_before_trx': '100000',
+			'saldo_after_trx': '5894',
+			'created_at': '2019-11-06 12:07:48',
+			'updated_at': '2019-11-15 20:59:10',
+			'tagihan': null
+		}]";
+		$item = json_decode($callback, true)[0];
+		$user = $this->db->get_where('users', array('id': intval($payment['user_id')))->row_array();
+		PushyAPI::send_message($user['pushy_token'], 1, 1, $title, "Klik untuk info lebih lanjut", "com.wave.passenger.UPDATE_PAYMENT_INFO", array(
+				'id_customer' => $item['target'],
+				'status' => intval($item['status']),
+				'product_type' => intval($payment['category']),
+				'product_code' => $item['code'],
+				'product_name' => $item['produk'],
+				'trxid' => $trxID
+			));
+	}
 }
